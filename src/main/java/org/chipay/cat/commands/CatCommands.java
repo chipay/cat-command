@@ -2,6 +2,7 @@ package org.chipay.cat.commands;
 
 import org.apache.commons.io.FileUtils;
 import org.chipay.cat.CatService;
+import org.chipay.cat.response.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.core.CommandMarker;
 import org.springframework.shell.core.annotation.CliAvailabilityIndicator;
@@ -14,6 +15,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Component
 public class CatCommands implements CommandMarker {
@@ -33,6 +37,11 @@ public class CatCommands implements CommandMarker {
 
     @CliAvailabilityIndicator({"cat file"})
     public boolean isFileAvailable() {
+        return true;
+    }
+
+    @CliAvailabilityIndicator({"cat categories"})
+    public boolean isCategoriesAvailable() {
         return true;
     }
 
@@ -56,5 +65,18 @@ public class CatCommands implements CommandMarker {
             System.err.println(e.getMessage());
             return "Error";
         }
+    }
+
+    @CliCommand(value = "cat categories", help = "Shows the sorted cat categories")
+    public String categories() {
+        List<Category> categories = this.catService.getCategories();
+        Collections.sort(categories, new Comparator<Category>() {
+
+            @Override
+            public int compare(Category o1, Category o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return categories.toString();
     }
 }
