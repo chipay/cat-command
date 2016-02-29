@@ -1,7 +1,9 @@
 package org.chipay.cat;
 
+import org.chipay.cat.response.CatCategoriesResponse;
 import org.chipay.cat.response.CatFacts;
 import org.chipay.cat.response.CatImagesURLResponse;
+import org.chipay.cat.response.Category;
 import org.chipay.cat.response.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,5 +48,15 @@ public class RestApiCatService implements CatService {
             throw new RuntimeException("No images were returned by thecatapi.com");
         }
         return new URL(images.get(0).getUrl());
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        CatCategoriesResponse catCategoriesResponse = this.restTemplate.getForObject(
+                "http://thecatapi.com/api/categories/list",
+                CatCategoriesResponse.class
+        );
+
+        return catCategoriesResponse.getData().getCategories();
     }
 }
