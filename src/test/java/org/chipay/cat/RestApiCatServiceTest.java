@@ -3,6 +3,7 @@ package org.chipay.cat;
 import org.chipay.cat.response.CatFacts;
 import org.chipay.cat.response.CatImagesURLResponse;
 import org.chipay.cat.response.Image;
+import org.chipay.cat.response.ImagesData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -59,10 +60,7 @@ public class RestApiCatServiceTest {
     public void getImageURL_MalformedURLFound_ThrowsException() throws MalformedURLException {
         RestApiCatService restService = this.createTestObject();
         String expectedURL  = "notAnURL";
-        CatImagesURLResponse catImagesURLResponse = new CatImagesURLResponse();
-        Image image = new Image();
-        image.setUrl(expectedURL);
-        catImagesURLResponse.getData().addImage(image);
+        CatImagesURLResponse catImagesURLResponse = this.newCatImagesURLResponse(expectedURL);
         when(
                 restTemplateMock.getForObject("http://thecatapi.com/api/images/get?format=xml",
                         CatImagesURLResponse.class)
@@ -74,10 +72,7 @@ public class RestApiCatServiceTest {
     public void getImageURL_ImageIsFound_URLReturned() throws MalformedURLException {
         RestApiCatService restService = this.createTestObject();
         String expectedURL  = "http://cat.picture/picture.jpg";
-        CatImagesURLResponse catImagesURLResponse = new CatImagesURLResponse();
-        Image image = new Image();
-        image.setUrl(expectedURL);
-        catImagesURLResponse.getData().addImage(image);
+        CatImagesURLResponse catImagesURLResponse = this.newCatImagesURLResponse(expectedURL);
         when(
                 restTemplateMock.getForObject("http://thecatapi.com/api/images/get?format=xml",
                         CatImagesURLResponse.class)
@@ -100,5 +95,15 @@ public class RestApiCatServiceTest {
         RestApiCatService restService = new RestApiCatService();
         restService.setRestTemplate(restTemplateMock);
         return restService;
+    }
+
+    private CatImagesURLResponse newCatImagesURLResponse(String expectedURL) {
+        CatImagesURLResponse catImagesURLResponse = new CatImagesURLResponse();
+        ImagesData imagesData = new ImagesData();
+        catImagesURLResponse.setData(imagesData);
+        Image image = new Image();
+        image.setUrl(expectedURL);
+        imagesData.addImage(image);
+        return catImagesURLResponse;
     }
 }

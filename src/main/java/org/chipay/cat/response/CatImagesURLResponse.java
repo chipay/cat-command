@@ -8,7 +8,6 @@ public class CatImagesURLResponse {
     private ImagesData data;
 
     public CatImagesURLResponse() {
-        this.data = new ImagesData();
     }
 
     public ImagesData getData() {
