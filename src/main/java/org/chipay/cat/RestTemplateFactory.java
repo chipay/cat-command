@@ -4,7 +4,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RestTemplateFactory {
 
@@ -12,9 +13,10 @@ public class RestTemplateFactory {
         RestTemplate restTemplate = new RestTemplate();
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(
-                Collections.singletonList(new MediaType("application", "javascript"))
-        );
+        List<MediaType> mediaTypes = new ArrayList<>();
+        mediaTypes.add(MediaType.TEXT_XML);
+        mediaTypes.add(new MediaType("application", "javascript"));
+        converter.setSupportedMediaTypes(mediaTypes);
         restTemplate.getMessageConverters().add(converter);
 
         return restTemplate;
