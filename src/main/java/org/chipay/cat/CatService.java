@@ -1,5 +1,8 @@
 package org.chipay.cat;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public interface CatService {
 
     /**
@@ -8,4 +11,6 @@ public interface CatService {
      * @return String The fact
      */
     String getFact();
+
+    URL getImageURL() throws MalformedURLException;
 }
