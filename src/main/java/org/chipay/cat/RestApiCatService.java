@@ -24,7 +24,7 @@ public class RestApiCatService implements CatService {
     @Override
     public String getFact() {
         CatFacts catFacts = this.restTemplate.getForObject("http://catfacts-api.appspot.com/api/facts", CatFacts.class);
-        if (!catFacts.success()) {
+        if (!catFacts.isSuccess()) {
             throw new RuntimeException("Error response from catfacts-api");
         }
         List<String> facts = catFacts.getFacts();

@@ -8,25 +8,19 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CatFacts {
 
-    private final String SUCCESS = "success";
-
-    private String success;
+    private boolean success;
     private List<String> facts;
 
     public CatFacts() {
         this.facts = new ArrayList<>();
     }
 
-    public String getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(String success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
-    public boolean success() {
-        return SUCCESS.equals(this.success);
+    public boolean isSuccess() {
+        return this.success;
     }
 
     public List<String> getFacts() {

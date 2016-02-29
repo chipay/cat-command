@@ -31,5 +31,4 @@ public class CatCommandsTest {
         assertEquals(true, cr.isSuccess());
         assertEquals(expectedCatFact, cr.getResult());
     }
-
 }

@@ -26,7 +26,7 @@ public class RestApiCatServiceTest {
         RestApiCatService restService = this.createTestObject();
         String expectedFact = "Cats are laid back";
         CatFacts catFacts = new CatFacts();
-        catFacts.setSuccess("success");
+        catFacts.setSuccess(true);
         catFacts.addFact(expectedFact);
         when(restTemplateMock.getForObject("http://catfacts-api.appspot.com/api/facts", CatFacts.class))
                 .thenReturn(catFacts);
@@ -38,7 +38,7 @@ public class RestApiCatServiceTest {
 
         RestApiCatService restService = this.createTestObject();
         CatFacts catFacts = new CatFacts();
-        catFacts.setSuccess("not");
+        catFacts.setSuccess(false);
         when(restTemplateMock.getForObject("http://catfacts-api.appspot.com/api/facts", CatFacts.class))
                 .thenReturn(catFacts);
         restService.getFact();
@@ -49,7 +49,7 @@ public class RestApiCatServiceTest {
 
         RestApiCatService restService = this.createTestObject();
         CatFacts catFacts = new CatFacts();
-        catFacts.setSuccess("success");
+        catFacts.setSuccess(true);
         when(restTemplateMock.getForObject("http://catfacts-api.appspot.com/api/facts", CatFacts.class))
                 .thenReturn(catFacts);
         restService.getFact();
